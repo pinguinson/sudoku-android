@@ -17,7 +17,7 @@ public class GameActivity extends Activity {
     Context context;
     SudokuCell currentCell;
 
-    private static final int[] BUTTON_IDS = {
+    private static final int[] BUTTON_MAIN_IDS = {
             R.id.setCellValue1,
             R.id.setCellValue2,
             R.id.setCellValue3,
@@ -27,6 +27,18 @@ public class GameActivity extends Activity {
             R.id.setCellValue7,
             R.id.setCellValue8,
             R.id.setCellValue9,
+    };
+
+    private static final int[] BUTTON_SMALL_IDS = {
+            R.id.setAvailable1,
+            R.id.setAvailable2,
+            R.id.setAvailable3,
+            R.id.setAvailable4,
+            R.id.setAvailable5,
+            R.id.setAvailable6,
+            R.id.setAvailable7,
+            R.id.setAvailable8,
+            R.id.setAvailable9,
     };
 
     @Override
@@ -47,8 +59,32 @@ public class GameActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        setButtonListeners();
+    }
 
-        View.OnClickListener myListener = new View.OnClickListener() {
+    private void setButtonListeners() {
+        setButtonListenersMainGrid();
+        setButtonListenersSmallGrid();
+    }
+
+    private void setButtonListenersSmallGrid() {
+        View.OnClickListener smallGridListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                Integer tag = ((Integer) v.getTag());
+                if (currentCell != null) {
+                    currentCell.toggleAvailable(tag - 1);
+                }
+            }
+        };
+        for (int i = 0; i < BUTTON_SMALL_IDS.length; i++) {
+            Button smallGridButton = (Button) findViewById(BUTTON_SMALL_IDS[i]);
+            smallGridButton.setOnClickListener(smallGridListener);
+            smallGridButton.setTag(i + 1);
+        }
+    }
+
+    private void setButtonListenersMainGrid() {
+        View.OnClickListener mainGridListener = new View.OnClickListener() {
             public void onClick(View v) {
                 Integer tag = ((Integer) v.getTag());
                 if (currentCell != null) {
@@ -57,14 +93,13 @@ public class GameActivity extends Activity {
                     } else {
                         currentCell.setNumber(tag);
                     }
-                    updateButtons();
                 }
             }
         };
-        for(int i = 0; i < BUTTON_IDS.length; i++) {
-            Button button = (Button)findViewById(BUTTON_IDS[i]);
-            button.setOnClickListener(myListener);
-            button.setTag(i + 1);
+        for (int i = 0; i < BUTTON_MAIN_IDS.length; i++) {
+            Button mainGridButton = (Button) findViewById(BUTTON_MAIN_IDS[i]);
+            mainGridButton.setOnClickListener(mainGridListener);
+            mainGridButton.setTag(i + 1);
         }
     }
 
@@ -93,7 +128,6 @@ public class GameActivity extends Activity {
         deselectCell();
         this.currentCell = currentCell;
         if (currentCell != null) {
-            updateButtons();
             currentCell.setSelection(true);
         }
     }
@@ -102,26 +136,6 @@ public class GameActivity extends Activity {
         if (getCurrentCell() != null) {
             getCurrentCell().setSelection(false);
             currentCell = null;
-            releaseButtons();
-        }
-    }
-
-    private void updateButtons() {
-        releaseButtons();
-        int currentCellNumber = getCurrentCell().getNumber();
-        if (currentCellNumber > 0) {
-            int buttonId = BUTTON_IDS[currentCellNumber - 1];
-            Button selectedButton = (Button) findViewById(buttonId);
-            selectedButton.setPressed(true);
-            Log.d("BUTTON", "button #" + currentCellNumber + " pressed");
-        }
-    }
-
-    private void releaseButtons() {
-        for (int i = 0; i < 9; i++) {
-            int buttonId = BUTTON_IDS[i];
-            Button selectedButton = (Button) findViewById(buttonId);
-            selectedButton.setPressed(false);
         }
     }
 
@@ -137,6 +151,5 @@ public class GameActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("SAVE", "successfully saved current game");
     }
 }

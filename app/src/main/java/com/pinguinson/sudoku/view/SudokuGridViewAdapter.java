@@ -46,18 +46,5 @@ public class SudokuGridViewAdapter extends BaseAdapter {
             cell.linkCell(x, y);
         }
         return cell;
-        /*View v = convertView;
-        if (v == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            v = inflater.inflate(R.layout.cell, parent, false);
-        } else {
-
-        }
-
-        SudokuCell cell = (SudokuCell) v;
-        int x = position % 9;
-        int y = position / 9;
-        cell.linkCell(x, y);
-        return cell;*/
     }
 }

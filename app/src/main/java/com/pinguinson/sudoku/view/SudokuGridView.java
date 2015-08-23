@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.pinguinson.sudoku.GameEngine;
 import com.pinguinson.sudoku.GameActivity;
+import com.pinguinson.sudoku.GameEngine;
 
 /**
  * Created by pinguinson on 8/17/15.
@@ -33,15 +33,6 @@ public class SudokuGridView extends GridView {
                     return;
                 }
                 gameActivity.setCurrentCell(cell);
-            }
-        });
-
-        setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                SudokuCell cell = (SudokuCell) view;
-                cell.setNumber(0);
-                return true;
             }
         });
     }

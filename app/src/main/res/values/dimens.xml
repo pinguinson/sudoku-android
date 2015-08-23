@@ -3,9 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="cellFontSize">20sp</dimen>
-    <dimen name="buttonNumberSize">20sp</dimen>
-    <dimen name="mainMenuButtonSize">22sp</dimen>
-    <dimen name="mainMenuTitle">60sp</dimen>
+    <dimen name="cell_main_text_size">26sp</dimen>
+    <dimen name="cell_small_text_size">10sp</dimen>
+
+    <dimen name="button_number_text_size">20sp</dimen>
+    <dimen name="main_menu_button_text_size">22sp</dimen>
+    <dimen name="main_menu_title_text_size">60sp</dimen>
+
     <dimen name="box_size">40dp</dimen>
 </resources>
