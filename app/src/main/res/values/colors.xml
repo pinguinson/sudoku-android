@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="cell_color_1">#cdcdcd</color>
+    <color name="cell_color_2">#ffffff</color>
+
+    <color name="main_menu_text_color">#181818</color>
+
+    <color name="font_color_immutable">#1e1e1e</color>
+    <color name="font_color_mutable">#3b3ac3</color>
+    <color name="font_color_selected">#818181</color>
+    <color name="font_color_invalid">#d20700</color>
+
+    <color name="main_menu_button">#ffffff</color>
+    <color name="button_released_gradient_start">#ebebeb</color>
+    <color name="button_released_gradient_end">#cdcdcd</color>
+    <color name="button_pressed_gradient_start">#d7d7d7</color>
+    <color name="button_pressed_gradient_end">#b9b9b9</color>
+
+</resources>
