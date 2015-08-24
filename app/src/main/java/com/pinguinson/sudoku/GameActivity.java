@@ -8,10 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.pinguinson.sudoku.generator.Difficulty;
-import com.pinguinson.sudoku.generator.SudokuBoard;
-import com.pinguinson.sudoku.generator.SudokuSolver;
-import com.pinguinson.sudoku.generator.TaskGenerator;
 import com.pinguinson.sudoku.view.SudokuCell;
 
 import java.io.FileOutputStream;
@@ -108,9 +104,9 @@ public class GameActivity extends Activity {
     }
 
     private void startNewGame() {
-        SudokuBoard generatedTask = new TaskGenerator(9).generateTask(Difficulty.HARD);
-        int[][] task = generatedTask.getBoard();
-        int[][] solution = SudokuSolver.solve(generatedTask).getBoard();
+        TaskGenerator taskGenerator = new TaskGenerator();
+        int[][] task = taskGenerator.generateTask(TaskGenerator.DIFFICULTY_EVIL);
+        int[][] solution = taskGenerator.generateSolution(TaskGenerator.DIFFICULTY_EVIL);
         GameEngine.getInstance().setGrids(solution, task);
         saveGame();
         GameEngine.getInstance().setGameActivity(this);
