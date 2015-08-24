@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -68,11 +69,31 @@ public class GameActivity extends Activity {
     }
 
     private void setButtonListenersSmallGrid() {
-        View.OnClickListener smallGridListener = new View.OnClickListener() {
+        View.OnTouchListener listener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // show interest in events resulting from ACTION_DOWN
+                if (event.getAction() == MotionEvent.ACTION_DOWN) return true;
+                // don't handle event unless its ACTION_UP so "doSomething()" only runs once.
+                if (event.getAction() != MotionEvent.ACTION_UP) return false;
+                Integer tag = ((Integer) v.getTag());
+                if (currentCell != null) {
+                    releaseMainGrid();
+                    setPressedSmallButton(tag, currentCell.toggleAvailable(tag));
+                }
+                return true;
+            }
+        };
+        for (int i = 0; i < BUTTON_SMALL_IDS.length; i++) {
+            Button smallGridButton = (Button) findViewById(BUTTON_SMALL_IDS[i]);
+            smallGridButton.setOnTouchListener(listener);
+            smallGridButton.setTag(i + 1);
+        }
+        /*View.OnClickListener smallGridListener = new View.OnClickListener() {
             public void onClick(View v) {
                 Integer tag = ((Integer) v.getTag());
                 if (currentCell != null) {
-                    currentCell.toggleAvailable(tag - 1);
+                    setPressedSmallButton(tag, currentCell.toggleAvailable(tag));
                 }
             }
         };
@@ -80,18 +101,48 @@ public class GameActivity extends Activity {
             Button smallGridButton = (Button) findViewById(BUTTON_SMALL_IDS[i]);
             smallGridButton.setOnClickListener(smallGridListener);
             smallGridButton.setTag(i + 1);
-        }
+        }*/
     }
 
     private void setButtonListenersMainGrid() {
-        View.OnClickListener mainGridListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                Integer tag = ((Integer) v.getTag());
+        View.OnTouchListener listener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // show interest in events resulting from ACTION_DOWN
+                if (event.getAction() == MotionEvent.ACTION_DOWN) return true;
+                // don't handle event unless its ACTION_UP so "doSomething()" only runs once.
+                if (event.getAction() != MotionEvent.ACTION_UP) return false;
+                Integer id = ((Integer) v.getTag());
                 if (currentCell != null) {
-                    if (tag == currentCell.getNumber()) {
+                    releaseSmallGrid();
+                    if (id == currentCell.getNumber()) {
+                        releaseMainButton();
                         currentCell.clearCell();
                     } else {
-                        currentCell.setNumber(tag);
+                        releaseMainButton();
+                        currentCell.setNumber(id);
+                        pressMainButton();
+                    }
+                }
+                return true;
+            }
+        };
+        for (int i = 0; i < BUTTON_MAIN_IDS.length; i++) {
+            Button mainGridButton = (Button) findViewById(BUTTON_MAIN_IDS[i]);
+            mainGridButton.setOnTouchListener(listener);
+            mainGridButton.setTag(i + 1);
+        }
+        /*View.OnClickListener mainGridListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                Integer id = ((Integer) v.getTag());
+                if (currentCell != null) {
+                    if (id == currentCell.getNumber()) {
+                        releaseMainButton();
+                        currentCell.clearCell();
+                    } else {
+                        releaseMainButton();
+                        currentCell.setNumber(id);
+                        pressMainButton();
                     }
                 }
             }
@@ -100,7 +151,29 @@ public class GameActivity extends Activity {
             Button mainGridButton = (Button) findViewById(BUTTON_MAIN_IDS[i]);
             mainGridButton.setOnClickListener(mainGridListener);
             mainGridButton.setTag(i + 1);
+        }*/
+    }
+
+    private Button getSmallButtonByNumber(int number) {
+        return (Button) findViewById(BUTTON_SMALL_IDS[number - 1]);
+    }
+
+    private Button getMainButtonByNumber(int number) {
+        return (Button) findViewById(BUTTON_MAIN_IDS[number - 1]);
+    }
+
+    private void setPressedSmallButton(int number, boolean isPressed) {
+        getSmallButtonByNumber(number).setPressed(isPressed);
+    }
+
+    private void releaseMainButton() {
+        if (currentCell.getNumber() != 0) {
+            getMainButtonByNumber(currentCell.getNumber()).setPressed(false);
         }
+    }
+
+    private void pressMainButton() {
+        getMainButtonByNumber(currentCell.getNumber()).setPressed(true);
     }
 
     private void startNewGame() {
@@ -131,6 +204,14 @@ public class GameActivity extends Activity {
         this.currentCell = currentCell;
         if (currentCell != null) {
             currentCell.setSelection(true);
+            for (int i = 0; i < BUTTON_MAIN_IDS.length; i++) {
+                Button mainGridButton = (Button) findViewById(BUTTON_MAIN_IDS[i]);
+                mainGridButton.setPressed(i + 1 == currentCell.getNumber());
+            }
+            for (int i = 0; i < BUTTON_SMALL_IDS.length; i++) {
+                Button smallGridButton = (Button) findViewById(BUTTON_SMALL_IDS[i]);
+                smallGridButton.setPressed(currentCell.isAvailable(i + 1));
+            }
         }
     }
 
@@ -138,6 +219,22 @@ public class GameActivity extends Activity {
         if (getCurrentCell() != null) {
             getCurrentCell().setSelection(false);
             currentCell = null;
+        }
+        releaseMainGrid();
+        releaseSmallGrid();
+    }
+
+    private void releaseMainGrid() {
+        for (int BUTTON_MAIN_ID : BUTTON_MAIN_IDS) {
+            Button mainGridButton = (Button) findViewById(BUTTON_MAIN_ID);
+            mainGridButton.setPressed(false);
+        }
+    }
+
+    private void releaseSmallGrid() {
+        for (int BUTTON_SMALL_ID : BUTTON_SMALL_IDS) {
+            Button smallGridButton = (Button) findViewById(BUTTON_SMALL_ID);
+            smallGridButton.setPressed(false);
         }
     }
 

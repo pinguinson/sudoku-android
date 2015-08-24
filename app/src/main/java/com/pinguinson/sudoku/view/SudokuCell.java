@@ -45,9 +45,13 @@ public class SudokuCell extends TextView {
         this.isSelected = selected;
     }
 
-    public void toggleAvailable(int number) {
+    public boolean toggleAvailable(int number) {
         setNumber(0);
-        GameEngine.getInstance().toggleAvailable(x, y, number);
+        return GameEngine.getInstance().toggleAvailable(x, y, number);
+    }
+
+    public boolean isAvailable(int number) {
+        return GameEngine.getInstance().isAvailable(x, y, number);
     }
 
     public void linkCell(int x, int y) {

@@ -48,9 +48,14 @@ public class GameEngine {
         return availableNumbers[x][y];
     }
 
-    public void toggleAvailable(int x, int y, int number) {
-        availableNumbers[x][y][number] = !availableNumbers[x][y][number];
+    public boolean toggleAvailable(int x, int y, int number) {
+        availableNumbers[x][y][number - 1] = !availableNumbers[x][y][number - 1];
         gameActivity.saveGame();
+        return isAvailable(x, y, number);
+    }
+
+    public boolean isAvailable(int x, int y, int number) {
+        return availableNumbers[x][y][number - 1];
     }
 
     public String saveGrids() {

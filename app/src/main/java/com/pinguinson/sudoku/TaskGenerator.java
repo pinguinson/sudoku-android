@@ -1,7 +1,6 @@
 package com.pinguinson.sudoku;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class TaskGenerator {
@@ -188,7 +187,6 @@ public class TaskGenerator {
                 }
             }
         }
-        System.err.println(Arrays.deepToString(task));
         return task;
     }
 
@@ -205,7 +203,6 @@ public class TaskGenerator {
                 }
             }
         }
-        System.err.println(Arrays.deepToString(solution));
         return solution;
     }
 
