@@ -1,6 +1,9 @@
 package com.pinguinson.sudoku;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,8 @@ public class MainMenuActivity extends Activity {
     public static final int DIFFICULTY_NORMAL = 1;
     public static final int DIFFICULTY_HARD = 2;
     public static final int DIFFICULTY_INSANE = 3;
+
+    private static final String[] level = {"Beginner", "Easy", "Medium", "Hard", "Evil"};
 
     public static final String MODE = "game mode";
     public static final int MODE_CONTINUE = 0;
@@ -51,8 +56,7 @@ public class MainMenuActivity extends Activity {
                 text.append(line);
             }
             br.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.d("LOAD", "failed to load saved game");
             return;
         }
@@ -68,9 +72,17 @@ public class MainMenuActivity extends Activity {
 
     //TODO: choose difficulty level
     public void startNewGame(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(DIFFICULTY, DIFFICULTY_EASY);
-        intent.putExtra(MODE, MODE_NEW);
-        startActivity(intent);
+        final Context context = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Set difficulty");
+        builder.setItems(level, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(context, GameActivity.class);
+                intent.putExtra(DIFFICULTY, which);
+                intent.putExtra(MODE, MODE_NEW);
+                startActivity(intent);
+            }
+        });
+        builder.show();
     }
 }

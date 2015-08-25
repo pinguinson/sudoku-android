@@ -55,7 +55,7 @@ public class GameActivity extends Activity {
                 continueGame(intent.getStringExtra(MainMenuActivity.LOAD));
                 break;
             case MainMenuActivity.MODE_NEW:
-                startNewGame();
+                startNewGame(intent.getIntExtra(MainMenuActivity.DIFFICULTY, TaskGenerator.DIFFICULTY_BEGINNER));
                 break;
         }
 
@@ -182,10 +182,10 @@ public class GameActivity extends Activity {
         getMainButtonByNumber(currentCell.getNumber()).setPressed(true);
     }
 
-    private void startNewGame() {
+    private void startNewGame(int level) {
         TaskGenerator taskGenerator = new TaskGenerator();
-        int[][] task = taskGenerator.generateTask(TaskGenerator.DIFFICULTY_EVIL);
-        int[][] solution = taskGenerator.generateSolution(TaskGenerator.DIFFICULTY_EVIL);
+        int[][] task = taskGenerator.generateTask(level);
+        int[][] solution = taskGenerator.generateSolution(level);
         GameEngine.getInstance().setGrids(solution, task);
         saveGame();
         GameEngine.getInstance().setGameActivity(this);

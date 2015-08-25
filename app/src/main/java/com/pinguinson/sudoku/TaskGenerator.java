@@ -9,6 +9,8 @@ public class TaskGenerator {
     private int[] converter;
     private Random random;
     private int version;
+    private int timesMirror;
+    private int timesRotate;
 
     public static final int DIFFICULTY_BEGINNER = 0;
     public static final int DIFFICULTY_EASY = 1;
@@ -21,6 +23,8 @@ public class TaskGenerator {
         solutions = new String[5][10];
         converter = generateConverter();
         random = new Random();
+        timesMirror = random.nextInt(2);
+        timesRotate = random.nextInt(4);
         version = random.nextInt(10);
 
         tasks[0][0] = "EI@B@@GA@AHB@@G@C@GD@I@@EHBHBA@D@@ICIF@H@@D@A@CG@@ABEHCGDAF@H@EBA@@G@CFIF@@CH@A@G";
@@ -187,6 +191,8 @@ public class TaskGenerator {
                 }
             }
         }
+        task = rotate(task, timesRotate);
+        task = mirror(task, timesMirror);
         return task;
     }
 
@@ -203,7 +209,55 @@ public class TaskGenerator {
                 }
             }
         }
+        solution = rotate(solution, timesRotate);
+        solution = mirror(solution, timesMirror);
         return solution;
+    }
+
+    private int[][] rotate(int[][] grid) {
+        int[][] updated = new int[9][9];
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                updated[x][y] = grid[y][8 - x];
+            }
+        }
+        return updated;
+    }
+
+    private int[][] rotate(int[][] grid, int times) {
+        int[][] updated = new int[9][9];
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                updated[x][y] = grid[x][y];
+            }
+        }
+        for (int i = 0; i < times; i++) {
+            updated = rotate(updated);
+        }
+        return updated;
+    }
+
+    private int[][] mirror(int[][] grid) {
+        int[][] updated = new int[9][9];
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                updated[x][y] = grid[x][8 - y];
+            }
+        }
+        return updated;
+    }
+
+    private int[][] mirror(int[][] grid, int times) {
+        int[][] updated = new int[9][9];
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                updated[x][y] = grid[x][y];
+            }
+        }
+        for (int i = 0; i < times; i++) {
+            updated = mirror(updated);
+        }
+        return updated;
     }
 
     private int[] generateConverter() {
