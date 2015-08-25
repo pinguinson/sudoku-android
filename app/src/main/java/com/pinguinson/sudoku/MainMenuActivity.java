@@ -1,14 +1,12 @@
 package com.pinguinson.sudoku;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -24,6 +22,14 @@ public class MainMenuActivity extends Activity {
     public static final int DIFFICULTY_HARD = 2;
     public static final int DIFFICULTY_INSANE = 3;
 
+    public static final int[] BUTTON_IDS = {
+            R.id.selectDifficulty1,
+            R.id.selectDifficulty2,
+            R.id.selectDifficulty3,
+            R.id.selectDifficulty4,
+            R.id.selectDifficulty5
+    };
+
     private static final String[] level = {"Beginner", "Easy", "Medium", "Hard", "Evil"};
 
     public static final String MODE = "game mode";
@@ -33,18 +39,41 @@ public class MainMenuActivity extends Activity {
     public static final String LOAD = "loaded file";
     public static final String SAVE_FILE = "savedGame";
 
+    protected SudokuApplication app;
+    FragmentMode fragmentMode;
+    FragmentDifficulty fragmentDifficulty;
+    FragmentTransaction fTrans;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        app = (SudokuApplication) getApplication();
         AdView mAdView = (AdView) findViewById(R.id.adMain);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        fragmentMode = new FragmentMode();
+        fragmentDifficulty = new FragmentDifficulty();
+        fTrans = getFragmentManager().beginTransaction();
+        fTrans.add(R.id.frameLayout, fragmentMode);
+        fTrans.commit();
     }
 
-    //TODO: make it possible to continue game
-    public void continueGame(View view) {
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this, FlurryConstants.API_KEY);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
+    }
+
+    public void continueGame() {
         String filename = SAVE_FILE;
         File file = new File(getFilesDir(), filename);
         StringBuilder text = new StringBuilder();
@@ -67,22 +96,14 @@ public class MainMenuActivity extends Activity {
         intent.putExtra(MODE, MODE_CONTINUE);
         intent.putExtra(LOAD, load);
         startActivity(intent);
-
     }
 
-    //TODO: choose difficulty level
-    public void startNewGame(View view) {
-        final Context context = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Set difficulty");
-        builder.setItems(level, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(context, GameActivity.class);
-                intent.putExtra(DIFFICULTY, which);
-                intent.putExtra(MODE, MODE_NEW);
-                startActivity(intent);
-            }
-        });
-        builder.show();
+    public void goToDifficultySelection() {
+        fTrans = getFragmentManager().beginTransaction();
+        fTrans.setCustomAnimations(R.animator.normal_in, R.animator.normal_out,
+                R.animator.backstack_in, R.animator.backstack_out);
+        fTrans.replace(R.id.frameLayout, fragmentDifficulty);
+        fTrans.addToBackStack(null);
+        fTrans.commit();
     }
 }

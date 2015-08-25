@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.pinguinson.sudoku.view.SudokuCell;
@@ -19,6 +20,8 @@ public class GameActivity extends Activity {
 
     Context context;
     SudokuCell currentCell;
+
+    protected SudokuApplication app;
 
     private static final int[] BUTTON_MAIN_IDS = {
             R.id.setCellValue1,
@@ -62,11 +65,24 @@ public class GameActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        app = (SudokuApplication) getApplication();
 
         AdView mAdView = (AdView) findViewById(R.id.adGame);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         setButtonListeners();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this, FlurryConstants.API_KEY);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
     }
 
     private void setButtonListeners() {
@@ -95,19 +111,6 @@ public class GameActivity extends Activity {
             smallGridButton.setOnTouchListener(listener);
             smallGridButton.setTag(i + 1);
         }
-        /*View.OnClickListener smallGridListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                Integer tag = ((Integer) v.getTag());
-                if (currentCell != null) {
-                    setPressedSmallButton(tag, currentCell.toggleAvailable(tag));
-                }
-            }
-        };
-        for (int i = 0; i < BUTTON_SMALL_IDS.length; i++) {
-            Button smallGridButton = (Button) findViewById(BUTTON_SMALL_IDS[i]);
-            smallGridButton.setOnClickListener(smallGridListener);
-            smallGridButton.setTag(i + 1);
-        }*/
     }
 
     private void setButtonListenersMainGrid() {
@@ -138,26 +141,6 @@ public class GameActivity extends Activity {
             mainGridButton.setOnTouchListener(listener);
             mainGridButton.setTag(i + 1);
         }
-        /*View.OnClickListener mainGridListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                Integer id = ((Integer) v.getTag());
-                if (currentCell != null) {
-                    if (id == currentCell.getNumber()) {
-                        releaseMainButton();
-                        currentCell.clearCell();
-                    } else {
-                        releaseMainButton();
-                        currentCell.setNumber(id);
-                        pressMainButton();
-                    }
-                }
-            }
-        };
-        for (int i = 0; i < BUTTON_MAIN_IDS.length; i++) {
-            Button mainGridButton = (Button) findViewById(BUTTON_MAIN_IDS[i]);
-            mainGridButton.setOnClickListener(mainGridListener);
-            mainGridButton.setTag(i + 1);
-        }*/
     }
 
     private Button getSmallButtonByNumber(int number) {
