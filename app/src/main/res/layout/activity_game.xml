@@ -1,8 +1,8 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -16,7 +16,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="9"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentTop="true"/>
+
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+
+        android:layout_below="@+id/sudokuGrid"
+        android:layout_centerHorizontal="true">
+    </com.google.android.gms.ads.AdView>
 
     <GridLayout
         android:id="@+id/buttonsGridSmall"
@@ -27,6 +41,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
+
 
         <Button
             style="@style/ButtonGridSmallStyle"
@@ -115,35 +130,5 @@
             android:text="@string/set9" />
 
     </GridLayout>
-
-    <!--<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/actionButtonsPanel"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <Button
-            style="@style/ButtonActionStyle"
-            android:id="@+id/clearCellButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear_cell" />
-
-        <Button
-            style="@style/ButtonActionStyle"
-            android:id="@+id/testSolutionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/test_solution" />
-        <Button
-            style="@style/ButtonActionStyle"
-            android:id="@+id/saveGameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_game"
-            android:onClick="saveGame" />
-    </LinearLayout>-->
 
 </RelativeLayout>

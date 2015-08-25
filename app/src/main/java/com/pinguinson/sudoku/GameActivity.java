@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.pinguinson.sudoku.view.SudokuCell;
 
 import java.io.FileOutputStream;
@@ -60,6 +62,10 @@ public class GameActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        AdView mAdView = (AdView) findViewById(R.id.adGame);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         setButtonListeners();
     }
 

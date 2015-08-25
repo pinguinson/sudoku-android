@@ -3,7 +3,7 @@
 
     <color name="cell_color_1">#cdcdcd</color>
     <color name="cell_color_2">#ffffff</color>
-    <color name="cell_color_selected">#c8ffc8</color>
+    <color name="cell_color_selected">#8bbef9</color>
 
     <color name="main_menu_text_color">#181818</color>
 
