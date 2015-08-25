@@ -1,4 +1,4 @@
-package com.pinguinson.sudoku.view;
+package com.pinguinson.sudoku.cell;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.pinguinson.sudoku;
+package com.pinguinson.sudoku.flurry;
 
 /**
  * Created by pinguinson on 8/25/15.

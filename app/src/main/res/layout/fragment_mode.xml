@@ -10,6 +10,17 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
+        <TextView
+            android:id="@+id/mainMenuTitle"
+            android:text="@string/app_name"
+            android:textSize="@dimen/main_menu_title_text_size"
+            android:textColor="@color/main_menu_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="60dp"
+            android:paddingBottom="20dp" />
+
         <Button
             style="@style/MainMenuButtonStyle"
             android:layout_width="wrap_content"

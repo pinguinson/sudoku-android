@@ -1,8 +1,9 @@
-package com.pinguinson.sudoku;
+package com.pinguinson.sudoku.engine;
 
 import android.util.Log;
 
-import com.pinguinson.sudoku.view.SudokuCell;
+import com.pinguinson.sudoku.cell.SudokuCell;
+import com.pinguinson.sudoku.fragments.GameFragment;
 
 import java.util.Arrays;
 
@@ -17,7 +18,7 @@ public class GameEngine {
     private SudokuCell[][] cells = new SudokuCell[9][9];
     private boolean[][][] availableNumbers;
     private int emptyCells;
-    private GameActivity gameActivity;
+    private GameFragment gameFragment;
 
     private GameEngine() {
     }
@@ -29,8 +30,8 @@ public class GameEngine {
         return instance;
     }
 
-    public void setGameActivity(GameActivity gameActivity) {
-        this.gameActivity = gameActivity;
+    public void setGameFragment(GameFragment gameFragment) {
+        this.gameFragment = gameFragment;
     }
 
     public void setGrids(int[][] solution, int[][] task) {
@@ -50,7 +51,7 @@ public class GameEngine {
 
     public boolean toggleAvailable(int x, int y, int number) {
         availableNumbers[x][y][number - 1] = !availableNumbers[x][y][number - 1];
-        gameActivity.saveGame();
+        gameFragment.saveGame();
         return isAvailable(x, y, number);
     }
 
@@ -147,10 +148,10 @@ public class GameEngine {
 
     public boolean testSolution() {
         boolean isCorrect = true;
-        if (gameActivity.getCurrentCell() != null) {
-            gameActivity.getCurrentCell().setSelection(false);
+        if (gameFragment.getCurrentCell() != null) {
+            gameFragment.getCurrentCell().setSelection(false);
         }
-        gameActivity.setCurrentCell(null);
+        gameFragment.setCurrentCell(null);
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (currentGrid[x][y] != solution[x][y]) {
@@ -176,7 +177,7 @@ public class GameEngine {
         if (emptyCells == 0) {
             testSolution();
         }
-        gameActivity.saveGame();
+        gameFragment.saveGame();
     }
 
     public boolean isMutable(int x, int y) {

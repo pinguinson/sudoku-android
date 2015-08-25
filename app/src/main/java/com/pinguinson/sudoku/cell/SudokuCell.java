@@ -1,4 +1,4 @@
-package com.pinguinson.sudoku.view;
+package com.pinguinson.sudoku.cell;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import com.pinguinson.sudoku.GameEngine;
+import com.pinguinson.sudoku.engine.GameEngine;
 import com.pinguinson.sudoku.R;
 
 import java.util.Arrays;

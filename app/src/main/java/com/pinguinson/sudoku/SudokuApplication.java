@@ -3,6 +3,7 @@ package com.pinguinson.sudoku;
 import android.app.Application;
 
 import com.flurry.android.FlurryAgent;
+import com.pinguinson.sudoku.flurry.FlurryConstants;
 
 /**
  * Created by pinguinson on 8/25/15.

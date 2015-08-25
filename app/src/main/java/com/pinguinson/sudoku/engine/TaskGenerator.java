@@ -1,4 +1,4 @@
-package com.pinguinson.sudoku;
+package com.pinguinson.sudoku.engine;
 
 import java.util.ArrayList;
 import java.util.Random;

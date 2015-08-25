@@ -1,4 +1,4 @@
-package com.pinguinson.sudoku.view;
+package com.pinguinson.sudoku.cell;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.pinguinson.sudoku.GameActivity;
-import com.pinguinson.sudoku.GameEngine;
+import com.pinguinson.sudoku.fragments.GameFragment;
+import com.pinguinson.sudoku.engine.GameEngine;
+import com.pinguinson.sudoku.MainActivity;
 
 /**
  * Created by pinguinson on 8/17/15.
@@ -25,14 +26,14 @@ public class SudokuGridView extends GridView {
 
                 //Checks if cell is mutable
                 boolean isMutable = GameEngine.getInstance().isMutable(cell.getXValue(), cell.getYValue());
-                GameActivity gameActivity = (GameActivity) context;
+                GameFragment gameFragment = ((MainActivity) context).gameFragment;
 
                 //deselect if clicked immutable or selected cell
-                if (!isMutable || gameActivity.getCurrentCell() == cell) {
-                    gameActivity.deselectCell();
+                if (!isMutable || gameFragment.getCurrentCell() == cell) {
+                    gameFragment.deselectCell();
                     return;
                 }
-                gameActivity.setCurrentCell(cell);
+                gameFragment.setCurrentCell(cell);
             }
         });
     }
