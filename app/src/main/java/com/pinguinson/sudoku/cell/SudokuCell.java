@@ -4,12 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import com.pinguinson.sudoku.engine.GameEngine;
 import com.pinguinson.sudoku.R;
+import com.pinguinson.sudoku.engine.GameEngine;
 
 import java.util.Arrays;
 
@@ -21,9 +22,11 @@ public class SudokuCell extends TextView {
     private int x;
     private int y;
     private boolean isSelected;
+    private Context context;
 
     public SudokuCell(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         setTypeface(Typeface.MONOSPACE);
     }
 
@@ -124,9 +127,9 @@ public class SudokuCell extends TextView {
 
     private void setTextColor() {
         if (!GameEngine.getInstance().isMutable(x, y)) {
-            setTextColor(getResources().getColor(R.color.font_color_immutable));
+            setTextColor(ContextCompat.getColor(context, R.color.font_color_immutable));
         } else {
-            setTextColor(getResources().getColor(R.color.font_color_mutable));
+            setTextColor(ContextCompat.getColor(context, R.color.font_color_mutable));
         }
     }
 

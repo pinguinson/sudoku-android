@@ -2,7 +2,6 @@ package com.pinguinson.sudoku;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.flurry.android.FlurryAgent;
@@ -21,26 +20,16 @@ public class MainActivity extends Activity {
     public ModeFragment modeFragment;
     public DifficultyFragment difficultyFragment;
     public GameFragment gameFragment;
-    private FragmentTransaction fTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         app = (SudokuApplication) getApplication();
-        AdView mAdView = (AdView) findViewById(R.id.adMain);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        modeFragment = new ModeFragment();
-        difficultyFragment = new DifficultyFragment();
-        gameFragment = new GameFragment();
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.add(R.id.frameLayout, modeFragment);
-        fTrans.addToBackStack(null);
-        fTrans.commit();
+        setAds();
+        createFragments();
+        setDefaultFragment();
     }
-
-
 
     @Override
     protected void onStart() {
@@ -69,6 +58,27 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void setAds() {
+        if (getResources().getBoolean(R.bool.is_admob_enabled)) {
+            AdView mAdView = (AdView) findViewById(R.id.adMain);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+    }
+
+    private void createFragments() {
+        modeFragment = new ModeFragment();
+        difficultyFragment = new DifficultyFragment();
+        gameFragment = new GameFragment();
+    }
+
+    private void setDefaultFragment() {
+        getFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, modeFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void continueGame(String load) {
         goToGame();
         gameFragment.continueGame(load);
@@ -80,38 +90,38 @@ public class MainActivity extends Activity {
     }
 
     public void goToDifficultySelection() {
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.setCustomAnimations(R.animator.normal_in, R.animator.normal_out,
-                R.animator.backstack_in, R.animator.backstack_out);
-        fTrans.replace(R.id.frameLayout, difficultyFragment);
-        fTrans.addToBackStack(null);
-        fTrans.commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.normal_in,    R.animator.normal_out,
+                                     R.animator.backstack_in, R.animator.backstack_out)
+                .replace(R.id.frameLayout, difficultyFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void goToGame() {
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.setCustomAnimations(R.animator.normal_in, R.animator.normal_out,
-                R.animator.backstack_in, R.animator.backstack_out);
-        fTrans.replace(R.id.frameLayout, gameFragment);
-        fTrans.addToBackStack(null);
-        fTrans.commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.normal_in,    R.animator.normal_out,
+                                     R.animator.backstack_in, R.animator.backstack_out)
+                .replace(R.id.frameLayout, gameFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void fromGameToMenu() {
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.setCustomAnimations(R.animator.backstack_in, R.animator.backstack_out,
-                R.animator.normal_in, R.animator.normal_out);
-        fTrans.replace(R.id.frameLayout, modeFragment);
-        fTrans.addToBackStack(null);
-        fTrans.commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.backstack_in, R.animator.backstack_out,
+                                     R.animator.normal_in,    R.animator.normal_out)
+                .replace(R.id.frameLayout, modeFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void goToMainMenu() {
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.setCustomAnimations(R.animator.normal_in, R.animator.normal_out,
-                R.animator.backstack_in, R.animator.backstack_out);
-        fTrans.replace(R.id.frameLayout, modeFragment);
-        fTrans.addToBackStack(null);
-        fTrans.commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.normal_in,    R.animator.normal_out,
+                                     R.animator.backstack_in, R.animator.backstack_out)
+                .replace(R.id.frameLayout, modeFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

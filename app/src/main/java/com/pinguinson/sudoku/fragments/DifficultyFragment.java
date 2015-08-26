@@ -38,10 +38,11 @@ public class DifficultyFragment extends Fragment {
             public void onClick(View v) {
                 Button current = (Button) v;
                 int level = Integer.valueOf(current.getTag().toString());
+
                 //Log event to Flurry
                 Map<String, String> map = new HashMap<>();
-                map.put(FlurryConstants.LOG_LEVEL_SELECTION, String.valueOf(level));
-                FlurryAgent.logEvent("Level selected", map);
+                map.put("level", String.valueOf(level));
+                FlurryAgent.logEvent(FlurryConstants.LOG_LEVEL_SELECTION, map);
                 ((MainActivity) getActivity()).startNewGame(level);
 
             }

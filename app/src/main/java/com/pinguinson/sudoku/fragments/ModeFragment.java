@@ -34,33 +34,37 @@ public class ModeFragment extends Fragment {
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String filename = MainActivity.SAVE_FILE;
-                File file = new File(mainActivity.getFilesDir(), filename);
-                StringBuilder text = new StringBuilder();
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    String line;
-
-                    while ((line = br.readLine()) != null) {
-                        text.append(line);
-                    }
-                    br.close();
-                } catch (IOException e) {
-                    Log.d("LOAD", "failed to load saved game");
-                    return;
-                }
-                String load = text.toString();
-                Log.d("LOAD", "loaded saved game");
-                mainActivity.continueGame(load);
+                loadGame();
             }
         });
         Button newGame = (Button) view.findViewById(R.id.buttonNewGame);
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).goToDifficultySelection();
+                mainActivity.goToDifficultySelection();
             }
         });
         return view;
+    }
+
+    private void loadGame() {
+        String filename = MainActivity.SAVE_FILE;
+        File file = new File(mainActivity.getFilesDir(), filename);
+        StringBuilder text = new StringBuilder();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+            }
+            br.close();
+        } catch (IOException e) {
+            Log.d("LOAD", "failed to load saved game");
+            return;
+        }
+        String load = text.toString();
+        Log.d("LOAD", "loaded saved game");
+        mainActivity.continueGame(load);
     }
 }
