@@ -12,7 +12,7 @@
 
     <!-- button grids -->
     <dimen name="box_size">40dp</dimen>
-    <dimen name="button_grid_margin">5dp</dimen>
-    <dimen name="main_button_text_size">20sp</dimen>
-    <dimen name="small_button_text_size">10sp</dimen>
+    <dimen name="button_grid_margin">8dp</dimen>
+    <dimen name="main_button_text_size">24sp</dimen>
+    <dimen name="small_button_text_size">12sp</dimen>
 </resources>

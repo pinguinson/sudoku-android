@@ -11,8 +11,8 @@
     <dimen name="main_menu_title_text_size">60sp</dimen>
 
     <!-- button grids -->
-    <dimen name="box_size">40dp</dimen>
-    <dimen name="button_grid_margin">5dp</dimen>
-    <dimen name="main_button_text_size">20sp</dimen>
-    <dimen name="small_button_text_size">10sp</dimen>
+    <dimen name="box_size">60dp</dimen>
+    <dimen name="button_grid_margin">12dp</dimen>
+    <dimen name="main_button_text_size">30sp</dimen>
+    <dimen name="small_button_text_size">15sp</dimen>
 </resources>

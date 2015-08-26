@@ -5,35 +5,32 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MainMenuButtonStyle" parent="@android:style/Widget.Button">
-        <item name="android:textSize">22sp</item>
+    <style name="ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:textColor">@color/main_menu_text_color</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/main_menu_button</item>
+        <item name="android:background">@drawable/in_game_button</item>
+
+    </style>
+
+    <style name="MainMenuButtonStyle" parent="ButtonStyle">
+        <item name="android:textSize">22sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:width">250dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
-    <style name="ButtonGridMainStyle" parent="@android:style/Widget.Button">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/main_menu_text_color</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/in_game_button</item>
+    <style name="ButtonGridMainStyle" parent="ButtonStyle">
+        <item name="android:textSize">@dimen/main_button_text_size</item>
         <item name="android:layout_width">@dimen/box_size</item>
         <item name="android:layout_height">@dimen/box_size</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">@dimen/button_grid_margin</item>
     </style>
 
-    <style name="ButtonGridSmallStyle" parent="@android:style/Widget.Button">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/main_menu_text_color</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/in_game_button</item>
+    <style name="ButtonGridSmallStyle" parent="ButtonStyle">
+        <item name="android:textSize">@dimen/small_button_text_size</item>
         <item name="android:layout_width">@dimen/box_size</item>
         <item name="android:layout_height">@dimen/box_size</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">@dimen/button_grid_margin</item>
     </style>
-
 </resources>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="cell_color_1">#cdcdcd</color>
+    <color name="cell_color_1">#e1e1e1</color>
     <color name="cell_color_2">#ffffff</color>
-    <color name="cell_color_selected">#8bbef9</color>
+    <color name="cell_color_selected">#a6caf9</color>
 
     <color name="main_menu_text_color">#181818</color>
 
